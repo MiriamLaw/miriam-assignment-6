@@ -2,34 +2,55 @@ package com.coderscampus.assignment6;
 
 public class TeslaSalesData {
 	
-	private String date;
+	private String month;
+	private int year;
 	private int salesNumber;
+	private String model;
 	
-	public TeslaSalesData(String date, int salesNumber) {
-		this.date = date;
+	public TeslaSalesData(String month, int year, int salesNumber, String model) {
+		this.month = month;
+		this.year = year;
 		this.salesNumber = salesNumber;
+		this.model = model;
 	}
 
-	public String getDate() {
-		return date;
+	public String getModel() {
+		return model;
 	}
 
-	public void setDate(String date) {
-		this.date = date;
+	public void setModel(String model) {
+		this.model = model;
+	}
+
+	public String getMonth() {
+		return month;
+	}
+
+	public void setMonth(String month) {
+		this.month = month;
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
 	}
 
 	public int getSalesNumber() {
 		return salesNumber;
 	}
 
-	@Override
-	public String toString() {
-		return "TeslaSalesData [date=" + date + ", salesNumber=" + salesNumber + "]";
-	}
-
 	public void setSalesNumber(int salesNumber) {
 		this.salesNumber = salesNumber;
 	}
 
+	@Override
+	public String toString() {
+		return "TeslaSalesData [month=" + month + ", year=" + year + ", salesNumber=" + salesNumber + ", model=" + model
+				+ "]";
+	}
 
+	
 }
