@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -15,7 +16,7 @@ public class FileService {
 
 	public static Optional<List<TeslaSalesData>> getDataFromFile(String fileName) {
 
-		System.out.println("Opening file: " + fileName);
+//		System.out.println("Opening file: " + fileName);
 
 		List<TeslaSalesData> modelData = new ArrayList<>();
 
@@ -25,10 +26,15 @@ public class FileService {
 			String headerLine = fileReader.readLine();
 			while ((line = fileReader.readLine()) != null) {
 				String[] salesData = line.split(",");
-				String date = salesData[0];
+				String dateStr = salesData[0];
 				int sales = Integer.parseInt(salesData[1]);
-
-				TeslaSalesData teslaSalesDataEntry = new TeslaSalesData(date, sales);
+				
+				//Parse the date using MONTH_FORMATTER
+				Month month = parseMonthFromCSV(dateStr);
+				int year = parseYearFromCSV(dateStr);
+				
+				//Create a TeslaSalesData object with parsed date
+				TeslaSalesData teslaSalesDataEntry = new TeslaSalesData(formatMonthYear(month, year), sales);
 				modelData.add(teslaSalesDataEntry);
 
 				return Optional.of(modelData);
@@ -47,11 +53,18 @@ public class FileService {
 	
 	
 	public static Month parseMonthFromCSV(String dateString) {
-        return Month.from(MONTH_FORMATTER.parse(dateString));
+		try {
+			return Month.from(MONTH_FORMATTER.parse(dateString));
+			
+		} catch (DateTimeParseException e) {
+			e.printStackTrace();
+			return null;
+		}
     }
 
     public static Integer parseYearFromCSV(String dateString) {
-        int twoDigitYear = Integer.parseInt(dateString.split("-")[0]);
+    	String yearStr = dateString.split("-")[1];
+        int twoDigitYear = Integer.parseInt(yearStr);
         return 2000 + twoDigitYear;
     }
 
