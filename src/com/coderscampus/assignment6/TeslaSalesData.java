@@ -6,7 +6,6 @@ public class TeslaSalesData {
 	private int sales;
 
 	public TeslaSalesData(String date, int sales) {
-		super();
 		this.date = date;
 		this.sales = sales;
 
