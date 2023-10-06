@@ -27,11 +27,9 @@ public class FileService {
 				String dateStr = salesData[0];
 				int sales = Integer.parseInt(salesData[1]);
 
-				// Parse the date using MONTH_FORMATTER
 				Month month = parseMonthFromCSV(dateStr);
 				int year = parseYearFromCSV(dateStr);
 
-				// Create a TeslaSalesData object with parsed date
 				TeslaSalesData teslaSalesDataEntry = new TeslaSalesData(formatMonthYear(month, year), sales);
 				modelData.add(teslaSalesDataEntry);
 
