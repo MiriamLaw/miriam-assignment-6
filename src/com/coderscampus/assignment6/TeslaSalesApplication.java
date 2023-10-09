@@ -7,10 +7,12 @@ import java.util.Optional;
 public class TeslaSalesApplication {
 
 	public static void main(String[] args) {
+		
+		String basePath = System.getProperty("user.dir");
 
-		String model3FilePath = "/Users/miriamlaw/git/miriam-assignment-6/src/model3.csv";
-		String modelSFilePath = "/Users/miriamlaw/git/miriam-assignment-6/src/modelS.csv";
-		String modelXFilePath = "/Users/miriamlaw/git/miriam-assignment-6/src/modelX.csv";
+		String model3FilePath = basePath + "/src/model3.csv";
+		String modelSFilePath = basePath + "/src/modelS.csv";
+		String modelXFilePath = basePath + "/src/modelX.csv";
 
 		Optional<List<TeslaSalesData>> optModel3Data = FileService.getDataFromFile(model3FilePath);
 		optModel3Data.ifPresent(records -> processSales("Model 3", records));
