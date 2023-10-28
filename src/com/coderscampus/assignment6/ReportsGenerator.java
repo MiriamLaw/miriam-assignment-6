@@ -1,11 +1,30 @@
 package com.coderscampus.assignment6;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class ReportsGenerator {
 
 	public static class Reports {
+		
+		public static void generateReport(String model, String modelFilePath) {
+			Optional<List<TeslaSalesData>> optModelData = FileService.getDataFromFile(modelFilePath);
+			optModelData.ifPresent(records -> generateReport(model, records));
+			
+		}
+
+		private static void generateReport(String model, List<TeslaSalesData> records) {
+			Map<Integer, Integer> yearlySales = TeslaSalesAnalyzer.getYearlySales(records);
+			Optional<TeslaSalesData> bestMonth = TeslaSalesAnalyzer.getBestMonth(records);
+			Optional<TeslaSalesData> worstMonth = TeslaSalesAnalyzer.getWorstMonth(records);
+
+			String yearEndSalesReport = ReportsGenerator.Reports.generateYearEndSalesReport(model, yearlySales);
+			System.out.println(yearEndSalesReport);
+
+			ReportsGenerator.Reports.generateBestAndWorstMonth(model, worstMonth.orElse(null), bestMonth.orElse(null));
+		}
 
 		public static String generateYearEndSalesReport(String modelName, Map<Integer, Integer> yearlySalesByModel) {
 			StringBuilder reportBuilder = new StringBuilder();
@@ -37,6 +56,8 @@ public class ReportsGenerator {
 			}
 
 		}
+
+		
 	}
 
 }
